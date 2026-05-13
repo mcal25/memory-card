@@ -2,19 +2,21 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
-import { Card } from './components/Card.jsx'
-import { Canvas } from './components/Canvas.jsx'
+import { AppCardContainer } from './components/AppCardContainer.jsx'
+import { AppHeader } from './components/AppHeader.jsx'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
   const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
+  const [score, setScore] = useState('');
+  const [bestScore, setBestScore] = useState('');
+  const [cardCount, setCardCount] = useState('');
 
   return (
     <>
-      <Canvas></Canvas>
-      <Card></Card>
+      <AppHeader/>
     </>
   )
 }

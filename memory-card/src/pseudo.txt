@@ -1,0 +1,5 @@
+Card generation plans:
+
+    - On initial page load, cards will be populated with a number of pre selected special cats. Game will be playable with those cats and on refresh still be those cats.
+
+    - There will be a button somewhere you can press to swap out for randomly accessed cats from the api, which after pressing will keep the same randomly fetched cats until the button is pressed again even on refresh etc.
