@@ -17,3 +17,12 @@ h1 {
 .instructions {
   text-align: center;
 }
+
+#wild-cat {
+  max-width: 800px;
+  max-height: 500px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display:block
+}
