@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -27,40 +27,76 @@ function App() {
   const [count, setCount] = useState(0)
   const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
-  const [score, setScore] = useState('');
-  const [bestScore, setBestScore] = useState('');
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
   const [cardCount, setCardCount] = useState('');
   const [catsArr, setCatsArr] = useState([
-    {id:crypto.randomUUID(), name: 'Freyja', url: freyja},
-    {id:crypto.randomUUID(), name: 'Mew', url: mew},
-    {id:crypto.randomUUID(), name: 'Yuumi', url: yuumi},
-    {id:crypto.randomUUID(), name: 'Halo', url: halo},
-    {id:crypto.randomUUID(), name: 'Kristen', url: kristen},
-    {id:crypto.randomUUID(), name: 'Endeavor', url: endeavor},
-    {id:crypto.randomUUID(), name: 'Entei', url: entei},
-    {id:crypto.randomUUID(), name: 'Boo', url: boo},
-    {id:crypto.randomUUID(), name: 'Disco', url: disco},
-    {id:crypto.randomUUID(), name: 'Fade', url: fade},
-    {id:crypto.randomUUID(), name: 'Schrodinger', url: schrodinger},
-    {id:crypto.randomUUID(), name: 'Cinnamon', url: cinnamon},
-    {id:crypto.randomUUID(), name: 'Umbreon', url: umbreon},
-    {id:crypto.randomUUID(), name: 'Moo', url: moo},
-    {id:crypto.randomUUID(), name: 'Migi', url: migi},
-    {id:crypto.randomUUID(), name: 'Popcorn', url: popcorn},
+    { id: crypto.randomUUID(), name: 'Freyja', url: freyja, clicked: false },
+    { id: crypto.randomUUID(), name: 'Mew', url: mew, clicked: false },
+    { id: crypto.randomUUID(), name: 'Yuumi', url: yuumi, clicked: false },
+    { id: crypto.randomUUID(), name: 'Halo', url: halo, clicked: false },
+    { id: crypto.randomUUID(), name: 'Kristen', url: kristen, clicked: false },
+    { id: crypto.randomUUID(), name: 'Endeavor', url: endeavor, clicked: false },
+    { id: crypto.randomUUID(), name: 'Entei', url: entei, clicked: false },
+    { id: crypto.randomUUID(), name: 'Boo', url: boo, clicked: false },
+    { id: crypto.randomUUID(), name: 'Disco', url: disco, clicked: false },
+    { id: crypto.randomUUID(), name: 'Fade', url: fade, clicked: false },
+    { id: crypto.randomUUID(), name: 'Schrodinger', url: schrodinger, clicked: false },
+    { id: crypto.randomUUID(), name: 'Cinnamon', url: cinnamon, clicked: false },
+    { id: crypto.randomUUID(), name: 'Umbreon', url: umbreon, clicked: false },
+    { id: crypto.randomUUID(), name: 'Moo', url: moo, clicked: false },
+    { id: crypto.randomUUID(), name: 'Migi', url: migi, clicked: false },
+    { id: crypto.randomUUID(), name: 'Popcorn', url: popcorn, clicked: false },
   ]);
 
-  // const catsArr = [..];
+  useEffect(() => {
+    console.log('this is getting hit', catsArr);
+    setCatsArr(shuffleArray(catsArr));
+    // call shuffleArray(catsArr) when a cat is clicked
+  }, []);
 
-  
 
-  
 
+  function shuffleArray(arr) {
+    const shuffled = [...arr];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+
+  const handleCardClick = (cardId) => {
+    setCatsArr(cats => shuffleArray(cats.map(cat => {
+      if (cat.id === cardId) {
+        if (cat.clicked === true) {
+          if (score > bestScore) {
+            setBestScore(score);
+          }
+
+          // record total true 
+
+          // GG YA LOST SON
+          // popup showing score that round and highest score of session
+          // popup will have button to continue (reset score / shuffle cards)
+        }
+
+        console.log('score before:', score);
+        setScore(score + 1);
+        return { ...cat, clicked: true };
+      }
+      return cat;
+    })));
+  }
+
+  console.log('score after:', score);
 
   return (
     <>
       <AppHeader />
       {/* <img src={catsArr[14].url} alt='A wild wild boyo' id='wild-cat' /> */}
-      <AppCardContainer catsArr={catsArr}/>
+      <AppCardContainer catsArr={catsArr} setCatsArr={setCatsArr} handleCardClick={handleCardClick} />
     </>
   )
 }

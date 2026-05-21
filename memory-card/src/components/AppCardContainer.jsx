@@ -14,7 +14,7 @@ async function testAPI() {
 
 // testAPI();
 
-const AppCardContainer = ({ name, picture, catsArr }) => {
+const AppCardContainer = ({ name, picture, catsArr, setCatsArr, handleCardClick}) => {
 
 
     console.log(catsArr);
@@ -30,23 +30,18 @@ const AppCardContainer = ({ name, picture, catsArr }) => {
 
     */
 
-
-
-
     return (
         <>
             <div className='card-container-body'>
-
-                {catsArr.map(cat => <div className='cat-card'>
-                    <img src={cat.url} alt="A SPECIAL WITTLE KITTY" />
-                    <p>{cat.name}</p>
-                </div>)}
-                {/* <img src={picture} alt="AN ADORABLE FELINE OF ANONYMOUS HERITAGE" /> */}
-                {/* <h1 className='card-container-name'>{name}</h1> */}
-                {/* <div  className='cat-card'>
-                    <img src={catsArr[1].url}/>
-                    <p>{catsArr[1].name}</p>
-                </div> */}
+                {catsArr.map(cat => (
+                    <div
+                        onClick = {() => handleCardClick(cat.id)}
+                        key={cat.id}
+                        className={cat.clicked === true ? 'clicked-cat-card cat-card' : 'cat-card'}>
+                        <img src={cat.url} alt="A SPECIAL WITTLE KITTY" />
+                        <p>{cat.name}</p>
+                    </div>
+                ))}
             </div>
         </>
     );
