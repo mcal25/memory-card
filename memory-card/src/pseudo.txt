@@ -1,3 +1,21 @@
+Things to address:
+
+
+    - shuffling all the positions of the cards after a card is clicked
+    - tracking which card has been clicked during the session
+    - the session itself
+    - api stuff with random cat images for a new session
+
+
+
+
+
+
+
+
+
+
+
 Card generation plans:
 
     - On initial page load, cards will be populated with a number of pre selected special cats. Game will be playable with those cats and on refresh still be those cats.

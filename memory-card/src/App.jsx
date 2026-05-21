@@ -30,6 +30,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [cardCount, setCardCount] = useState('');
+  const [hasLost, setHasLost] = useState(false);
   const [catsArr, setCatsArr] = useState([
     { id: crypto.randomUUID(), name: 'Freyja', url: freyja, clicked: false },
     { id: crypto.randomUUID(), name: 'Mew', url: mew, clicked: false },
@@ -50,11 +51,18 @@ function App() {
   ]);
 
   useEffect(() => {
-    console.log('this is getting hit', catsArr);
     setCatsArr(shuffleArray(catsArr));
     // call shuffleArray(catsArr) when a cat is clicked
   }, []);
 
+  useEffect(() => {
+    if (hasLost === true) {
+      setCatsArr(cats => cats.map((cat) => {
+        return { ...cat, clicked: false };
+      }));
+      // logic for dialog
+    }
+  }, [hasLost]);
 
 
   function shuffleArray(arr) {
@@ -68,34 +76,39 @@ function App() {
 
 
   const handleCardClick = (cardId) => {
+    let hasLost = false;
     setCatsArr(cats => shuffleArray(cats.map(cat => {
       if (cat.id === cardId) {
         if (cat.clicked === true) {
           if (score > bestScore) {
             setBestScore(score);
           }
-
           // record total true 
-
           // GG YA LOST SON
           // popup showing score that round and highest score of session
           // popup will have button to continue (reset score / shuffle cards)
+          setScore(0);
+          setHasLost(true);
+        } else {
+          setScore(score + 1);
+          return { ...cat, clicked: true };
         }
-
-        console.log('score before:', score);
-        setScore(score + 1);
-        return { ...cat, clicked: true };
       }
       return cat;
     })));
   }
 
-  console.log('score after:', score);
 
   return (
     <>
-      <AppHeader />
-      {/* <img src={catsArr[14].url} alt='A wild wild boyo' id='wild-cat' /> */}
+      <AppHeader score={score} bestScore={bestScore} />
+      <dialog id="my-dialog" popover='auto' open={hasLost}>
+        <p>GG, you already booped that cat :3</p>
+        <p>Here's how you did:</p>
+        <p>Score: {score}</p>
+        <p>Best Score: {bestScore}</p>
+        <button onClick={() => setHasLost(false)}>Close</button>
+      </dialog>
       <AppCardContainer catsArr={catsArr} setCatsArr={setCatsArr} handleCardClick={handleCardClick} />
     </>
   )
