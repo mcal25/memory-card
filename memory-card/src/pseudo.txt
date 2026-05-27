@@ -1,3 +1,7 @@
+Last worked on feature:
+
+    - handling when user wins game
+
 Things to address:
 
 

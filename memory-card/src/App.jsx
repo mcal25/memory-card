@@ -31,6 +31,7 @@ function App() {
   const [bestScore, setBestScore] = useState(0);
   const [cardCount, setCardCount] = useState('');
   const [hasLost, setHasLost] = useState(false);
+  const [hasWon, setHasWon] = useState(false);
   const [catsArr, setCatsArr] = useState([
     { id: crypto.randomUUID(), name: 'Freyja', url: freyja, clicked: false },
     { id: crypto.randomUUID(), name: 'Mew', url: mew, clicked: false },
@@ -39,16 +40,19 @@ function App() {
     { id: crypto.randomUUID(), name: 'Kristen', url: kristen, clicked: false },
     { id: crypto.randomUUID(), name: 'Endeavor', url: endeavor, clicked: false },
     { id: crypto.randomUUID(), name: 'Entei', url: entei, clicked: false },
-    { id: crypto.randomUUID(), name: 'Boo', url: boo, clicked: false },
-    { id: crypto.randomUUID(), name: 'Disco', url: disco, clicked: false },
-    { id: crypto.randomUUID(), name: 'Fade', url: fade, clicked: false },
-    { id: crypto.randomUUID(), name: 'Schrodinger', url: schrodinger, clicked: false },
-    { id: crypto.randomUUID(), name: 'Cinnamon', url: cinnamon, clicked: false },
-    { id: crypto.randomUUID(), name: 'Umbreon', url: umbreon, clicked: false },
-    { id: crypto.randomUUID(), name: 'Moo', url: moo, clicked: false },
-    { id: crypto.randomUUID(), name: 'Migi', url: migi, clicked: false },
-    { id: crypto.randomUUID(), name: 'Popcorn', url: popcorn, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Boo', url: boo, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Disco', url: disco, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Fade', url: fade, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Schrodinger', url: schrodinger, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Cinnamon', url: cinnamon, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Umbreon', url: umbreon, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Moo', url: moo, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Migi', url: migi, clicked: false },
+    // { id: crypto.randomUUID(), name: 'Popcorn', url: popcorn, clicked: false },
   ]);
+
+
+
 
   useEffect(() => {
     setCatsArr(shuffleArray(catsArr));
@@ -61,9 +65,26 @@ function App() {
         return { ...cat, clicked: false };
       }));
       // logic for dialog
+    } else if (hasWon === true) {
+      setCatsArr(cats => cats.map((cat) => {
+        return { ...cat, clicked: false };
+      }));
     }
-  }, [hasLost]);
+  }, [hasLost, hasWon]);
 
+
+  // make a function
+  // have close call that function
+  // in the function it will set score to 0 && set useState to false
+  function resetAfterWin() {
+    setScore(0);
+    setHasWon(false);
+  }
+
+  function resetAfterLoss() {
+    setScore(0);
+    setHasLost(false);
+  }
 
   function shuffleArray(arr) {
     const shuffled = [...arr];
@@ -79,7 +100,7 @@ function App() {
     let hasLost = false;
     setCatsArr(cats => shuffleArray(cats.map(cat => {
       if (cat.id === cardId) {
-        if (cat.clicked === true) {
+        if (cat.clicked === true) { // lost checker
           if (score > bestScore) {
             setBestScore(score);
           }
@@ -87,8 +108,14 @@ function App() {
           // GG YA LOST SON
           // popup showing score that round and highest score of session
           // popup will have button to continue (reset score / shuffle cards)
-          setScore(0);
           setHasLost(true);
+        } else if (score + 1 === catsArr.length) { // win checker
+          setScore(score + 1); // think I fixed it showing wrong score here on win
+          console.log(score);
+          if (score + 1 > bestScore) {
+            setBestScore(score + 1);
+          }
+          setHasWon(true);
         } else {
           setScore(score + 1);
           return { ...cat, clicked: true };
@@ -107,7 +134,11 @@ function App() {
         <p>Here's how you did:</p>
         <p>Score: {score}</p>
         <p>Best Score: {bestScore}</p>
-        <button onClick={() => setHasLost(false)}>Close</button>
+        <button onClick={() => resetAfterLoss()}>Close</button>
+      </dialog>
+      <dialog id="my-dialog-2" popover='auto' open={hasWon}>
+        <p>YOU WON. MEMORY GOOD? EINSTEIN INDEED!!!!!!</p>
+        <button onClick={() => resetAfterWin()}>Close</button>
       </dialog>
       <AppCardContainer catsArr={catsArr} setCatsArr={setCatsArr} handleCardClick={handleCardClick} />
     </>
