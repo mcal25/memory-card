@@ -5,6 +5,7 @@ const AppHeader = ({ score, bestScore }) => {
     return (
         <>
             <h1>Meowmory Card</h1>
+            <button id='differentCatsButton'>Different Cats</button>
             <div className='score-section'>
                 <h3>Score: {score}</h3>
                 <h3>Best Score: {bestScore}</h3>

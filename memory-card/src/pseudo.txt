@@ -1,12 +1,9 @@
 Last worked on feature:
 
-    - handling when user wins game
 
 Things to address:
 
 
-    - shuffling all the positions of the cards after a card is clicked
-    - tracking which card has been clicked during the session
     - the session itself
     - api stuff with random cat images for a new session
 

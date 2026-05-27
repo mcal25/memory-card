@@ -18,11 +18,26 @@ h1 {
   text-align: center;
 }
 
-#wild-cat {
-  max-width: 800px;
-  max-height: 500px;
-  height: auto;
+#differentCatsButton {
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  display:block
+  padding: 10px;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #ffb38a 0%, #7d5a50 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px; /* Perfectly rounded pill shape */
+  box-shadow: 0 4px 15px rgba(125, 90, 80, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#differentCatsButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 179, 138, 0.4);
+  background: linear-gradient(135deg, #7d5a50 0%, #ffb38a 100%);
 }
