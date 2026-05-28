@@ -37,7 +37,7 @@ const AppCardContainer = ({ name, picture, catsArr, setCatsArr, handleCardClick}
                     <div
                         onClick = {() => handleCardClick(cat)}
                         key={cat.id}
-                        className={cat.clicked === true ? 'clicked-cat-card cat-card push-button'  : 'cat-card push-button' }>
+                        className='cat-card'>
                         <img src={cat.url} alt="A SPECIAL WITTLE KITTY" />
                         <p>{cat.name}</p>
                     </div>

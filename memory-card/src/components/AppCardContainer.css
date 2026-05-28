@@ -11,9 +11,9 @@
     border: 5px solid black;
 }
 
-.clicked-cat-card {
+/* .clicked-cat-card {
     border: 6px dotted rgb(8, 0, 255);
-}
+} */
 
 .cat-card > img {
     max-width: 100%;
