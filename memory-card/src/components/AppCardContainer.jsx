@@ -17,7 +17,7 @@ async function testAPI() {
 const AppCardContainer = ({ name, picture, catsArr, setCatsArr, handleCardClick}) => {
 
 
-    console.log(catsArr);
+    // console.log(catsArr);
 
     /*
         - loop through catsArr

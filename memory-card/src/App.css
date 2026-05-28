@@ -30,7 +30,7 @@ h1 {
   padding: 12px 28px;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 50px; /* Perfectly rounded pill shape */
+  border-radius: 50px;
   box-shadow: 0 4px 15px rgba(125, 90, 80, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;

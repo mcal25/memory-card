@@ -1,11 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
 
-const AppHeader = ({ score, bestScore }) => {
+
+
+
+
+
+
+
+
+
+
+
+
+const AppHeader = ({ score, setScore, bestScore, generateArrOfRandomCats }) => {
     return (
         <>
             <h1>Meowmory Card</h1>
-            <button id='differentCatsButton'>Different Cats</button>
+            <button id='differentCatsButton' onClick={() => {
+                generateArrOfRandomCats();
+                setScore(0);
+            }}>Different Cats</button>
             <div className='score-section'>
                 <h3>Score: {score}</h3>
                 <h3>Best Score: {bestScore}</h3>

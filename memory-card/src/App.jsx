@@ -24,9 +24,6 @@ import { AppHeader } from './components/AppHeader.jsx'
 import './App.css'
 
 
-
-
-
 function shuffleArray(arr) {
   const shuffled = [...arr];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -46,6 +43,7 @@ function App() {
   const [cardCount, setCardCount] = useState('');
   const [hasLost, setHasLost] = useState(false);
   const [hasWon, setHasWon] = useState(false);
+  const [randomCatsArr, setRandomCatsArr] = useState([]);
   const [catsArr, setCatsArr] = useState(shuffleArray([
     { id: crypto.randomUUID(), name: 'Freyja', url: freyja, clicked: false },
     { id: crypto.randomUUID(), name: 'Mew', url: mew, clicked: false },
@@ -54,36 +52,34 @@ function App() {
     { id: crypto.randomUUID(), name: 'Kristen', url: kristen, clicked: false },
     { id: crypto.randomUUID(), name: 'Endeavor', url: endeavor, clicked: false },
     { id: crypto.randomUUID(), name: 'Entei', url: entei, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Boo', url: boo, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Disco', url: disco, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Fade', url: fade, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Schrodinger', url: schrodinger, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Cinnamon', url: cinnamon, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Umbreon', url: umbreon, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Moo', url: moo, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Migi', url: migi, clicked: false },
-    // { id: crypto.randomUUID(), name: 'Popcorn', url: popcorn, clicked: false },
+    { id: crypto.randomUUID(), name: 'Boo', url: boo, clicked: false },
+    { id: crypto.randomUUID(), name: 'Disco', url: disco, clicked: false },
+    { id: crypto.randomUUID(), name: 'Fade', url: fade, clicked: false },
+    { id: crypto.randomUUID(), name: 'Schrodinger', url: schrodinger, clicked: false },
+    { id: crypto.randomUUID(), name: 'Cinnamon', url: cinnamon, clicked: false },
+    { id: crypto.randomUUID(), name: 'Umbreon', url: umbreon, clicked: false },
+    { id: crypto.randomUUID(), name: 'Moo', url: moo, clicked: false },
+    { id: crypto.randomUUID(), name: 'Migi', url: migi, clicked: false },
+    { id: crypto.randomUUID(), name: 'Popcorn', url: popcorn, clicked: false },
   ]));
-
-
 
 
   const handleCardClick = (clickedCat) => {
     setCatsArr(shuffleArray(catsArr));
     if (clickedCat.clicked === true) {
-      if (score > bestScore) {
-        setBestScore(score);
-      }
       setHasLost(true);
     } else if (score + 1 === catsArr.length) {
       setScore(score + 1);
+      setHasWon(true);
       if (score + 1 > bestScore) {
         setBestScore(score + 1);
       }
-      setHasWon(true);
     } else {
       setScore(score + 1);
       clickedCat.clicked = true;
+      if (score + 1 > bestScore) {
+        setBestScore(score + 1);
+      }
     }
   }
 
@@ -98,9 +94,21 @@ function App() {
   }
 
 
+  async function generateArrOfRandomCats() {
+    try {
+      const resp = await fetch(`https://api.thecatapi.com/v1/images/search?limit=16&api_key=live_vRI68oYBqS7rcFFbZJoraZyrDdKr0e9AKCOrz4ug0xZzSUityVQ6a6YXzXid2zU9`);
+      const randomCats = await resp.json();
+      setRandomCatsArr(randomCats);
+      setCatsArr(randomCats)
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+
   return (
     <>
-      <AppHeader score={score} bestScore={bestScore} />
+      <AppHeader score={score} setScore={setScore} bestScore={bestScore} generateArrOfRandomCats={generateArrOfRandomCats} />
       <dialog id="my-dialog" popover='auto' open={hasLost}>
         <p>GG, you already booped that cat :3</p>
         <p>Here's how you did:</p>
@@ -119,30 +127,6 @@ function App() {
 
 export default App
 
-// My cat api key:
+// My cat key:
 // live_vRI68oYBqS7rcFFbZJoraZyrDdKr0e9AKCOrz4ug0xZzSUityVQ6a6YXzXid2zU9
 // This is for "https://thecatapi.com/"
-
-/* <section id="top-section">
-  <div className="hero">
-    <img src={heroImg} className="base" width="170" height="179" alt="" />
-    <img src={reactLogo} className="framework" alt="React logo" />
-    <img src={viteLogo} className="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Meowmory Card</h1>
-    <Card></Card>
-    <p>
-      Test your memory! Click each unique image a single time until you have clicked them all. If you click a given image more than once, you lose!
-    </p>
-  </div>
-</section>
-
-<section id='score-section'>
-  <p>Score:</p>
-  <p>Best Score:</p>
-</section>
-
-<section id='card-section'>
-
-</section> */
